@@ -7,37 +7,39 @@ class Node<T> {
   }
 }
 
-//2LinkList
+//2 LinkedList
 
-class LinkList<T> {
+class LinkedList<T> {
   head: Node<T> | null = null;
 
   size: number = 0;
-
+  tail: Node<T> | null = null;
   get length(): number {
     return this.size;
   }
   // 添加节点
   append(value: T) {
     const newNode = new Node(value);
-    if (this.head === null) this.head = newNode;
-    else {
-      let current = this.head;
-      while (current.next != null) {
-        current = current.next;
-      }
-      current.next = newNode;
-      newNode.next = null;
+    if (this.head === null) {
+      this.head = newNode;
+    } else {
+      this.tail!.next = newNode;
     }
+    this.tail = newNode;
     this.size++;
   }
   traverse(): void {
     //遍历
+    let values: T[] = [];
     let current = this.head;
     while (current != null) {
-      console.log(current.value);
+      values.push(current.value);
+      if (this.isTail(current)) break;
       current = current.next;
     }
+    if (this.head && this.tail?.next === this.head)
+      values.push(this.head.value);
+    console.log(values.join("->"));
   }
   insert(value: T, position: number): boolean {
     if (position < 0 || position > this.size) return false;
@@ -54,8 +56,12 @@ class LinkList<T> {
       }
       newNode.next = current!.next;
       current!.next = newNode;
+      if (position === this.size - 1) this.tail = newNode;
     }
     return true;
+  }
+  private isTail(node: Node<T>): boolean {
+    return node === this.tail;
   }
   checkPosition(position: number): boolean {
     return !(position < 0 || position > this.size);
@@ -64,6 +70,7 @@ class LinkList<T> {
     if (position < 0 || position > this.size) return null;
     if (position === 0) {
       this.head = this.head?.next ?? null;
+      if (this.length === 1) this.tail = null;
     } else {
       let current = this.head;
       let previous: Node<T> | null = null;
@@ -73,6 +80,7 @@ class LinkList<T> {
         current = current.next;
       }
       previous!.next = current?.next ?? null;
+      if (position === this.size - 1) this.tail = previous;
     }
     this.size--;
     return null;
@@ -89,4 +97,4 @@ class LinkList<T> {
   }
 }
 
-export {};
+export { LinkedList };
