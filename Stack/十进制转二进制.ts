@@ -1,4 +1,4 @@
-import { ArrayStack } from "./栈结构";
+import { ArrayStack } from "./栈";
 function decToBin(decimal: number): string {
   const stack = new ArrayStack();
   while (decimal != 0) {
