@@ -1,12 +1,4 @@
-//1 node节点类
-class Node<T> {
-  value: T;
-  next: Node<T> | null = null;
-  constructor(value: T) {
-    this.value = value;
-  }
-}
-
+import { Node } from "./LinkedNode";
 //2 LinkedList
 
 class LinkedList<T> {
@@ -16,6 +8,19 @@ class LinkedList<T> {
   tail: Node<T> | null = null;
   get length(): number {
     return this.size;
+  }
+  index(value: T): number {
+    let current = this.head;
+    let index = 0;
+    while (current) {
+      if (current.value === value) {
+        return index;
+      }
+      if (this.isTail(current)) current = null;
+      else current = current.next;
+      index++;
+    }
+    return -1;
   }
   // 添加节点
   append(value: T) {
