@@ -1,4 +1,4 @@
-import { ArrayQueue } from "./队列";
+import { ArrayQueue } from "./Queue";
 function foo(names: string[], num: number): string | undefined {
   if (names.length === 0) return undefined;
   const queue = new ArrayQueue<string>();
