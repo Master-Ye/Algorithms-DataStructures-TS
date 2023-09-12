@@ -6,7 +6,17 @@ class Heap<T> {
     this.data[i] = this.data[j];
     this.data[j] = temp;
   }
-  insert(value: T) {}
+  insert(value: T) {
+    this.data.push(value);
+    this.length++;
+    let index = this.length - 1;
+    let parentIndex = Math.floor((index - 1) / 2);
+    while (index > 0) {
+      if (this.data[index] <= this.data[parentIndex]) break;
+      this.swap(index, parentIndex);
+      index = parentIndex;
+    }
+  }
   isEmpty(): boolean {
     return this.length === 0;
   }
